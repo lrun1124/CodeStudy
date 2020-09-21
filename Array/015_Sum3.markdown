@@ -1,5 +1,5 @@
 
-<img src="../img/015.png"/>
+<img src="../img/015.png" width="450"/>
 
 ```js
 var threeSum = function(nums) {
