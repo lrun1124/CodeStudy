@@ -1,3 +1,7 @@
+
+<img src="../img/001.png" width="500"/>
+
+```JS
 /**
  * @param {number[]} nums
  * @param {number} target
@@ -16,3 +20,6 @@ var twoSum = function(nums, target) {
 };
 //test
 console.log(twoSum([2,7,11,15],9));
+```
+
+用map记录
