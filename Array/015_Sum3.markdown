@@ -1,0 +1,47 @@
+
+<img src="img/015.png"/>
+
+```js
+var threeSum = function(nums) {
+    if(nums.length < 3) return [];
+
+    nums = nums.sort(function(a,b){ return a - b });
+    let res = [];
+
+    if(nums[0] === nums[nums.length-1]) {
+        if(nums[0] === 0) {
+            res.push([0,0,0]);
+            return res;
+        } else {
+            return [];
+        }
+    }
+    for(let i=0; i<nums.length; i++) {
+        //debugger;
+        if(i !== 0 && nums[i] === nums[i-1]) continue;
+        let mid = i+1,
+            end = nums.length-1;
+        while(mid < end) {
+            let sum = nums[i] + nums[mid] + nums[end];
+            if(sum === 0) {
+                res.push([nums[i], nums[mid], nums[end]]);
+                while(++mid < end && nums[mid-1] === nums[mid]) {
+                }
+                while(mid < --end && nums[end+1] === nums[end]) {
+                }
+            }
+            else if(sum > 0) {
+                end--;
+                continue;
+            }
+            else if(sum < 0) {
+                mid++;
+                continue;
+            } 
+        }
+    }
+    return res;
+};
+
+console.log(threeSum([-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6]));
+```
