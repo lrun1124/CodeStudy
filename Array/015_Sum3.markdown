@@ -3,11 +3,12 @@
 
 ```js
 var threeSum = function(nums) {
+    //处理边界
     if(nums.length < 3) return [];
-
+    //先排序
     nums = nums.sort(function(a,b){ return a - b });
     let res = [];
-
+    //特殊处理全0和全其他值
     if(nums[0] === nums[nums.length-1]) {
         if(nums[0] === 0) {
             res.push([0,0,0]);
@@ -17,31 +18,28 @@ var threeSum = function(nums) {
         }
     }
     for(let i=0; i<nums.length; i++) {
-        //debugger;
         if(i !== 0 && nums[i] === nums[i-1]) continue;
+        //two point，变成sum2问题
         let mid = i+1,
             end = nums.length-1;
         while(mid < end) {
             let sum = nums[i] + nums[mid] + nums[end];
             if(sum === 0) {
                 res.push([nums[i], nums[mid], nums[end]]);
-                while(++mid < end && nums[mid-1] === nums[mid]) {
-                }
-                while(mid < --end && nums[end+1] === nums[end]) {
-                }
+                //向右向左滑动，找到第一个不同的值，注意就算没有相同的值也要滑动，所以用do-while，否则会无线循环
+                do{ mid++ } while(mid < end && nums[mid] === nums[mid-1])
+                do{ end-- } while(mid < end && nums[end] === nums[end+1])
             }
             else if(sum > 0) {
                 end--;
-                continue;
-            }
-            else if(sum < 0) {
+            } else {
                 mid++;
-                continue;
             } 
         }
     }
     return res;
 };
-
 console.log(threeSum([-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6]));
 ```
+
+先排序，循环数组，内层变成2sum问题，再用两个指针滑动，和为0记录，内外循环过程中下一个遇相同的值跳过
