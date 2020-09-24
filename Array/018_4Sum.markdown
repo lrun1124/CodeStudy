@@ -1,0 +1,42 @@
+<img src="../img/018.png" width="500"/>
+
+```JS
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[][]}
+ */
+var fourSum = function(nums, target) {
+    if(nums.length < 4) {
+        return [];
+    }
+    var res = [];
+    nums.sort(function(a,b) {return a - b;})
+    for(let i=0; i<nums.length; i++) {
+        if(i!==0 && nums[i] === nums[i-1]) continue;
+        for(let j=i+1; j<nums.length; j++) {
+            if(j!==i+1 && nums[j] === nums[j-1]) continue;
+            var mid = j + 1,
+                end = nums.length - 1,
+                sum;
+            while(mid < end) {
+                sum = nums[i] + nums[j] + nums[mid] + nums[end];
+                if(sum === target) {
+                    res.push([nums[i],nums[j],nums[mid],nums[end]]);
+                    do{ mid++ } while(mid<end && nums[mid] === nums[mid-1]);
+                    do{ end-- } while(mid<end && nums[end] === nums[end+1]);
+                } else if (sum < target) {
+                    do{ mid++ } while(mid<end && nums[mid] === nums[mid-1]);
+                } else {
+                    do{ end-- } while(mid<end && nums[end] === nums[end+1]);
+                }
+            }
+        }
+    }
+    return res;
+};
+
+console.log(fourSum([1, 0, -1, 0, -2, 2], 0))
+```
+
+外层加入循环，内层变成3Sum的问题，NSum的问题都可以简化成3Sum的问题，N每加一层，外层加一层循环，每层循环开始跳过重复值
